@@ -1,11 +1,17 @@
 package cd.controller;
 
+import java.sql.Array;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import cd.service.Company;
 import cd.service.CompanyService;
@@ -46,11 +52,17 @@ public class CompanyController {
         return "addcompany";
     }
     @RequestMapping(value="addordelete",params="action2",method=RequestMethod.POST)
-    public String action2()
+    public String action2(Model model)
     {
-        return "delcompany";
+    	List<Company> list=cs.getlist();
+    	model.addAttribute("list",list);
+        return "listcompany";
     }
+    
 
+    
+    
+    
     @RequestMapping("delcomp")
     public String delcom(HttpServletRequest request) {
     	String cname=request.getParameter("cname");
@@ -59,5 +71,16 @@ public class CompanyController {
     		return "delsuccess";
     	else
     		return "delunsuccess";
+    	
     }
-}
+    	
+    	
+    	@RequestMapping(value="delete",method=RequestMethod.GET)
+    	public String deleting(Model model ,@RequestParam(value="companyname",required=false)String id ) {
+    		
+    		List<Company> list=cs.del(id);
+    		model.addAttribute("list",list);
+    		return "listcompany";
+    	}
+    }
+

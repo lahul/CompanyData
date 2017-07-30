@@ -31,6 +31,12 @@ public class CompanyService {
 		return i;
 	}
 	
+	public List<Company> getlist() {
+		String query="select *from companies";
+		List<Company> list=namedParameterJdbcTemplate.query(query, new CompanyRowmapper());
+		return list;
+	}
+	
 	public boolean alreadyexists(String cname) {
 		String query="select * from companies where company_name=:cname";
 		HashMap<String,String> hm=new HashMap<>();
@@ -50,5 +56,14 @@ public class CompanyService {
 		hm.put("cname", cname);
 		boolean i=namedParameterJdbcTemplate.update(query, hm)==1;
 		return i;
+	}
+	
+	public List<Company> del(String cname){
+		String query="delete from companies where company_name=:cname";
+		HashMap<String,String> hm=new HashMap<>();
+		hm.put("cname", cname);
+		namedParameterJdbcTemplate.update(query, hm);
+		List<Company> list=getlist();
+		return list;
 	}
 }

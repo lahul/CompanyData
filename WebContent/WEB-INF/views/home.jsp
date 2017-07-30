@@ -11,7 +11,7 @@
 <form action="addordelete" method="post">
 <table><tr><td>
 <input style="width:150px;height:30px" type="submit" name="action1" value="Add Company" ></td></tr><tr><td>
-<input style="width:150px;height:30px" type="submit" name="action2" value="Delete Company"></td></tr>
+<input style="width:150px;height:30px" type="submit" name="action2" value="List Company"></td></tr>
 </table>
 </form>
 </div>

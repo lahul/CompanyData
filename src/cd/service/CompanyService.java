@@ -66,4 +66,15 @@ public class CompanyService {
 		List<Company> list=getlist();
 		return list;
 	}
+	
+	public List<Company> editcom(String oldname,String cname,String location){
+		String query="update companies set company_name=:cname,location=:location where company_name=:oname";
+		HashMap<String,String> hm=new HashMap<>();
+		hm.put("cname", cname);
+		hm.put("location", location);
+		hm.put("oname", oldname);
+		namedParameterJdbcTemplate.update(query, hm);
+		List<Company> list=getlist();
+		return list;
+	}
 }

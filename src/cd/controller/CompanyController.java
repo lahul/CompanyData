@@ -4,6 +4,7 @@ import java.sql.Array;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -79,6 +80,26 @@ public class CompanyController {
     	public String deleting(Model model ,@RequestParam(value="companyname",required=false)String id ) {
     		
     		List<Company> list=cs.del(id);
+    		model.addAttribute("list",list);
+    		return "listcompany";
+    	}
+    	
+    	@RequestMapping(value="edit",method=RequestMethod.GET)
+    	public String editcom(HttpSession session,Model model,@RequestParam(value="companyname", required=false)String id) {
+    		//String name=id;
+    		//model.addAttribute(name);
+    		session.setAttribute("name", id);
+    		return "editcompany";
+    	}
+    	
+    	@RequestMapping("editsuc")
+    	public String editsuc(Model model,HttpServletRequest request,HttpSession session) {
+    		//String oldname="s";
+    		String oldname=(String) session.getAttribute("name");
+    		String cname=request.getParameter("cname");
+    		String location=request.getParameter("loc");
+    		List<Company> list=cs.editcom(oldname,cname,location);
+    		session.invalidate();
     		model.addAttribute("list",list);
     		return "listcompany";
     	}

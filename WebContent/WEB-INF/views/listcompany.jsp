@@ -8,15 +8,14 @@
 <title>Company Lists</title>
 </head>
 <body>
-<c:forEach var="row" items="${list}">
-<table border="solid"><tr><td>Company Name</td><td>Location</td></tr><tr><td>
+<table border="solid"><tr><th>Company Name</th><th>Location</th><th></th></tr>
+<c:forEach var="row" items="${list}"><tr><td>
 <c:out value="${row.company_name}"/></td><td>
 <c:out value="${row.location}"/></td><td>
 <a href="delete?companyname=${row.company_name}">delete</a>
-
+<a href="edit?companyname=${row.company_name}">edit</a>
 </td></tr>
-</table>
 </c:forEach>
-
+</table>
 </body>
 </html>

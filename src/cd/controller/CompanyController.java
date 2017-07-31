@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import cd.service.Company;
 import cd.service.CompanyService;
+import cd.service.Employee;
 
 @Controller
 public class CompanyController {
@@ -92,6 +93,12 @@ public class CompanyController {
     		return "editcompany";
     	}
     	
+    	@RequestMapping(value="addemp",method=RequestMethod.GET)
+    	public String addemp(Model model,HttpSession session,@RequestParam(value="companyname" ,required=false)String id) {
+    		session.setAttribute("name",id);
+    		return "addemployee";
+    	}
+    	
     	@RequestMapping("editsuc")
     	public String editsuc(Model model,HttpServletRequest request,HttpSession session) {
     		//String oldname="s";
@@ -102,6 +109,59 @@ public class CompanyController {
     		session.invalidate();
     		model.addAttribute("list",list);
     		return "listcompany";
+    	}
+    	
+    	@RequestMapping("emp")
+    	public String addemployee(Model model,HttpSession session,HttpServletRequest request) {
+    		String cname=(String) session.getAttribute("name");
+    		String eid=request.getParameter("eid");
+    		String ename=request.getParameter("ename");
+    		List<Employee> list=cs.addtoemp(cname,eid,ename);
+    		session.invalidate();
+    		model.addAttribute("list",list);
+    		return "listemployee";
+    	}
+    	
+    	@RequestMapping(value="deleteemployee",method=RequestMethod.GET)
+    	public String deleteemp(Model model,@RequestParam(value="eid",required=false)String eid) {
+    		List<Employee> list=cs.delemp(eid);
+    		model.addAttribute("list",list);
+    		return "listemployee";
+    	}
+    	
+    	@RequestMapping(value="editemployee",method=RequestMethod.GET)
+    	public String editemp(HttpSession session,Model model,@RequestParam(value="eid",required=false)String eid,@RequestParam(value="cname",required=false)String cname) {
+    		session.setAttribute("cname", cname);
+    		session.setAttribute("eid", eid);
+    		return "newemployee";
+    	}
+    	
+    	@RequestMapping("newemp")
+    	public String editcomplete(Model model,HttpSession session,HttpServletRequest request) {
+    		String oldcname=(String) session.getAttribute("cname");
+    		String oldeid=(String) session.getAttribute("eid");
+    		String eid=request.getParameter("eid");
+    		String ename=request.getParameter("ename");
+    		String cname=request.getParameter("cname");
+    		session.invalidate();
+    		List<Employee> list=cs.editemp(oldcname,oldeid,eid,ename,cname);
+    		model.addAttribute("list",list);
+    		return "listemployee";
+    	}
+    	
+    	@RequestMapping("search")
+    	public String search(Model model,HttpServletRequest request) {
+    		String key=request.getParameter("search");
+    		List<Employee> list=cs.searchkey(key);
+    		model.addAttribute("list",list);
+    		return "listemployee";
+    	}
+    	
+    	@RequestMapping("listemp")
+    	public String listemp(Model model) {
+    		List<Employee> list=cs.getallemp();
+    		model.addAttribute("list",list);
+    		return "listemployee";
     	}
     }
 

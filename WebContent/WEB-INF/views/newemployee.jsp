@@ -4,17 +4,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title></title>
+<title>New Employee</title>
 </head>
 <body>
-<div align="center">
-<form action="addcomp" method="post">
-<table><tr><td>
+<form action="newemp" method="post">
+<table><tr><td></td></tr><tr><td>
+Employee Id:<input type="text" name="eid"></td></tr><tr><td>
+Employee Name:<input type="text" name="ename"></td></tr><tr><td>
 Company Name:<input type="text" name="cname"></td></tr><tr><td>
-Location:<input type="text" name="location"></td></tr><tr><td>
-<input type="submit" value="Add"></td></tr>
+<input type="submit" value="Add Employee"></td></tr><tr><td>
 </table>
 </form>
-</div>
 </body>
 </html>

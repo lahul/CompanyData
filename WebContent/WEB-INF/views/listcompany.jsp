@@ -8,12 +8,23 @@
 <title>Company Lists</title>
 </head>
 <body>
+<div align="center">
+<form action="addordelete" method="post">
+<input style="width:150px;height:30px" type="submit" name="action1" value="Add Company" >
+</form>
+</div>
+<div align="center">
+<form action="listemp" method="post">
+<input style="width:150px;height:30px" type="submit" name="listkey" value="Employee list" >
+</form>
+</div>
 <table border="solid"><tr><th>Company Name</th><th>Location</th><th></th></tr>
 <c:forEach var="row" items="${list}"><tr><td>
 <c:out value="${row.company_name}"/></td><td>
 <c:out value="${row.location}"/></td><td>
 <a href="delete?companyname=${row.company_name}">delete</a>
 <a href="edit?companyname=${row.company_name}">edit</a>
+<a href="addemp?companyname=${row.company_name}">AddEmployee</a>
 </td></tr>
 </c:forEach>
 </table>

@@ -12,7 +12,7 @@ public class EmployeeRowmapper implements RowMapper<Employee>{
 		Employee emp=new Employee();
 		emp.setEid(arg0.getString("eid"));
 		emp.setEname(arg0.getString("empname"));
-		emp.setCname(arg0.getString("company_name"));
+		emp.setCid(arg0.getString("cid"));
 		return emp;
 	}
 

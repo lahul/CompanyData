@@ -10,6 +10,7 @@
 <div align="center">
 <form action="addcomp" method="post">
 <table><tr><td>
+Company Id<input type="text" name="id"></td></tr><tr><td>
 Company Name:<input type="text" name="cname"></td></tr><tr><td>
 Location:<input type="text" name="location"></td></tr><tr><td>
 <input type="submit" value="Add"></td></tr>

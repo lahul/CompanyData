@@ -1,6 +1,7 @@
 package cd.controller;
 
 import java.sql.Array;
+import java.util.regex.*;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,10 @@ import cd.service.Employee;
 
 @Controller
 public class CompanyController {
+	
+	
+	public int id;
+	
 	@Autowired
 	CompanyService cs =new CompanyService();
 	
@@ -30,12 +35,21 @@ public class CompanyController {
     
     @RequestMapping("addcomp")
     public String addcom(HttpServletRequest request) {
+    	String id=request.getParameter("id");
+    	if(!Pattern.matches("[1-9]*", id)) {
+    		return "error";
+    	}
     	String cname=request.getParameter("cname");
     	String location=request.getParameter("location");
-    	if(cs.alreadyexists(cname))
-    		return "alreadyexists";
-    	boolean s=cs.addcompany(cname,location);
+    	if(id.isEmpty()||cname.isEmpty()||location.isEmpty()) {
+    		return "error";
+    	}
+    	boolean s=cs.addcompany(id,cname,location);
+    	if(s) {
     	return "success";
+    	}
+    	else 
+    		return "alreadyexists";
     }
 	/*@RequestMapping("addordelete")
 	public String addordelete(HttpServletRequest request) {
@@ -61,10 +75,6 @@ public class CompanyController {
         return "listcompany";
     }
     
-
-    
-    
-    
     @RequestMapping("delcomp")
     public String delcom(HttpServletRequest request) {
     	String cname=request.getParameter("cname");
@@ -78,7 +88,7 @@ public class CompanyController {
     	
     	
     	@RequestMapping(value="delete",method=RequestMethod.GET)
-    	public String deleting(Model model ,@RequestParam(value="companyname",required=false)String id ) {
+    	public String deleting(Model model ,@RequestParam(value="cid",required=false)String id ) {
     		
     		List<Company> list=cs.del(id);
     		model.addAttribute("list",list);
@@ -86,26 +96,32 @@ public class CompanyController {
     	}
     	
     	@RequestMapping(value="edit",method=RequestMethod.GET)
-    	public String editcom(HttpSession session,Model model,@RequestParam(value="companyname", required=false)String id) {
+    	public String editcom(HttpSession session,Model model,@RequestParam(value="cid", required=false)String id) {
     		//String name=id;
-    		//model.addAttribute(name);
-    		session.setAttribute("name", id);
-    		return "editcompany";
+    		session.setAttribute("id", id);//model.addAttribute(name);
+       		return "editcompany";
     	}
     	
     	@RequestMapping(value="addemp",method=RequestMethod.GET)
-    	public String addemp(Model model,HttpSession session,@RequestParam(value="companyname" ,required=false)String id) {
-    		session.setAttribute("name",id);
+    	public String addemp(Model model,HttpSession session,@RequestParam(value="cid" ,required=false)String id) {
+    		session.setAttribute("id",id);
     		return "addemployee";
     	}
     	
     	@RequestMapping("editsuc")
     	public String editsuc(Model model,HttpServletRequest request,HttpSession session) {
     		//String oldname="s";
-    		String oldname=(String) session.getAttribute("name");
+    		String oid= (String) session.getAttribute("id");
+    		String newid=request.getParameter("id");
+    		if(!Pattern.matches("[1-9]*", newid)) {
+        		return "error";
+        	}
     		String cname=request.getParameter("cname");
     		String location=request.getParameter("loc");
-    		List<Company> list=cs.editcom(oldname,cname,location);
+    		List<Company> list=cs.editcom(oid,newid,cname,location);
+    		if(list==null) {
+    			return "alreadyexists";
+    		}
     		session.invalidate();
     		model.addAttribute("list",list);
     		return "listcompany";
@@ -113,10 +129,16 @@ public class CompanyController {
     	
     	@RequestMapping("emp")
     	public String addemployee(Model model,HttpSession session,HttpServletRequest request) {
-    		String cname=(String) session.getAttribute("name");
+    		String cid=(String) session.getAttribute("id");
     		String eid=request.getParameter("eid");
+    		if(!Pattern.matches("[1-9]*", eid)) {
+        		return "error";
+        	}
     		String ename=request.getParameter("ename");
-    		List<Employee> list=cs.addtoemp(cname,eid,ename);
+    		List<Employee> list=cs.addtoemp(cid,eid,ename);
+    		if(list==null) {
+    			return "alreadyexists";
+    		}
     		session.invalidate();
     		model.addAttribute("list",list);
     		return "listemployee";
@@ -130,21 +152,27 @@ public class CompanyController {
     	}
     	
     	@RequestMapping(value="editemployee",method=RequestMethod.GET)
-    	public String editemp(HttpSession session,Model model,@RequestParam(value="eid",required=false)String eid,@RequestParam(value="cname",required=false)String cname) {
-    		session.setAttribute("cname", cname);
+    	public String editemp(HttpSession session,Model model,@RequestParam(value="eid",required=false)String eid,@RequestParam(value="cname",required=false)String cid) {
+    		session.setAttribute("cid", cid);
     		session.setAttribute("eid", eid);
     		return "newemployee";
     	}
     	
     	@RequestMapping("newemp")
     	public String editcomplete(Model model,HttpSession session,HttpServletRequest request) {
-    		String oldcname=(String) session.getAttribute("cname");
+    		String cid=(String) session.getAttribute("cid");
     		String oldeid=(String) session.getAttribute("eid");
     		String eid=request.getParameter("eid");
+    		if(!Pattern.matches("[1-9]*", eid)) {
+        		return "error";
+        	}
     		String ename=request.getParameter("ename");
-    		String cname=request.getParameter("cname");
+    		
     		session.invalidate();
-    		List<Employee> list=cs.editemp(oldcname,oldeid,eid,ename,cname);
+    		List<Employee> list=cs.editemp(cid,oldeid,eid,ename);
+    		if(list==null) {
+    			return "alreadyexists";
+    		}
     		model.addAttribute("list",list);
     		return "listemployee";
     	}

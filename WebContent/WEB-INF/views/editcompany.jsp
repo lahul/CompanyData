@@ -9,11 +9,13 @@
 </head>
 <body>
 <h1>Enter the new details</h1>
-
+<div align="center">
 <form action="editsuc" method="post">
-Company Name :<input  type="text" name="cname" placeholder="${m}">
-Location : <input type="text" name="loc">
+Company Id:<input type="text" name="id"><br>
+Company Name :<input  type="text" name="cname" placeholder="${m}"><br>
+Location : <input type="text" name="loc"><br>
 <input type="submit" value="Edit"> 
 </form>
+</div>
 </body>
 </html>

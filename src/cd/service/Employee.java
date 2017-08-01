@@ -4,7 +4,7 @@ public class Employee {
 
 	private String eid;
 	private String ename;
-	private String cname;
+	private String cid;
 	public String getEid() {
 		return eid;
 	}
@@ -17,12 +17,13 @@ public class Employee {
 	public void setEname(String ename) {
 		this.ename = ename;
 	}
-	public String getCname() {
-		return cname;
+	public String getCid() {
+		return cid;
 	}
-	public void setCname(String cname) {
-		this.cname = cname;
+	public void setCid(String cid) {
+		this.cid = cid;
 	}
+	
 	
 	
 }

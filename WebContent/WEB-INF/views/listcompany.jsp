@@ -18,13 +18,14 @@
 <input style="width:150px;height:30px" type="submit" name="listkey" value="Employee list" >
 </form>
 </div>
-<table border="solid"><tr><th>Company Name</th><th>Location</th><th></th></tr>
+<table border="solid"><tr><th>Company Id</th><th>Company Name</th><th>Location</th><th></th></tr>
 <c:forEach var="row" items="${list}"><tr><td>
+<c:out value="${row.id}"/></td><td>
 <c:out value="${row.company_name}"/></td><td>
 <c:out value="${row.location}"/></td><td>
-<a href="delete?companyname=${row.company_name}">delete</a>
-<a href="edit?companyname=${row.company_name}">edit</a>
-<a href="addemp?companyname=${row.company_name}">AddEmployee</a>
+<a href="delete?cid=${row.id}">delete</a>
+<a href="edit?cid=${row.id}">edit</a>
+<a href="addemp?cid=${row.id}">AddEmployee</a>
 </td></tr>
 </c:forEach>
 </table>

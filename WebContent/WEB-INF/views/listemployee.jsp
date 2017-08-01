@@ -13,13 +13,13 @@
 <input type="submit" value="go">
 </form>
 
-<table border="solid"><tr><th>Employee Id</th><th>Employee name</th><th>Company name</th><th>link</th></tr>
+<table border="solid"><tr><th>Employee Id</th><th>Employee name</th><th>link</th></tr>
 <c:forEach var="row" items="${list}"><tr><td>
 <c:out value="${row.eid}"/></td><td>
-<c:out value="${row.ename}"/></td><td>
-<c:out value="${row.cname}"/></td><td>
+<c:out value="${row.ename}"/></td><!--<td>
+<c:out value="${row.cid}"/></td>--><td>
 <a href="deleteemployee?eid=${row.eid}">delete</a>
-<a href="editemployee?eid=${row.eid}&cname=${row.cname}">edit</a>
+<a href="editemployee?eid=${row.eid}&cname=${row.cid}">edit</a>
 </td></tr>
 </c:forEach>
 </table>

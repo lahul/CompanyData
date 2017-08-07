@@ -149,13 +149,15 @@ public class CompanyService {
 	}
 
 	public List<Employee> getallemp() {
-		String query="select *from employee";
+		String query="select employee.eid,employee.empname,companies.company_name from employee INNER JOIN companies on employee.cid=companies.id";
 		List<Employee> list=namedParameterJdbcTemplate.query(query, new EmployeeRowmapper());
 		return list;
 	}
 
 	public List<Employee> searchkey(String key) {
-		String query="select *from employee where eid=:key or empname=:key or cid=:key";
+		String query="select employee eid,employee.empname,companies.company_name from employee"
+				+ "Inner join companies where employee.cid=companies.id and"
+				+ "eid=:key or empname=:key or cid=:key";
 		HashMap<String,String> hm=new HashMap<>();
 		hm.put("key", key);
 		List<Employee> list=namedParameterJdbcTemplate.query(query, hm, new EmployeeRowmapper());

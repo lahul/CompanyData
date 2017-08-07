@@ -4,11 +4,13 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import java.lang.Exception.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.jdbc.datasource.lookup.DataSourceLookupFailureException;
 import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
 import org.springframework.validation.MessageCodesResolver;
 import org.springframework.validation.Validator;
@@ -44,7 +46,7 @@ public class CompanyConfigurer implements WebMvcConfigurer{
 		return resolver;
 	}
 	@Bean
-	public DataSource setDataSource() {
+	public DataSource setDataSource(){
 		JndiDataSourceLookup lookup=new JndiDataSourceLookup();
 		lookup.setResourceRef(true);
 		DataSource dataSource=lookup.getDataSource("jdbc/companydata");

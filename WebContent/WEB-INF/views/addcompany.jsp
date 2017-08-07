@@ -5,10 +5,20 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title></title>
+<script type="text/javascript">
+function checkinpu(){
+	var x=document.forms["form1"]["id"].value;
+	//var regx=/[1-9]*/;
+	if(!(x=="/[1-9]*/")){
+		alert("id should be a integer");
+		return false;
+	}
+}
+</script>
 </head>
 <body>
 <div align="center">
-<form action="addcomp" method="post">
+<form name="form1"  onsubmit="return checkinpu()" action="addcomp" method="post">
 <table><tr><td>
 Company Id<input type="text" name="id"></td></tr><tr><td>
 Company Name:<input type="text" name="cname"></td></tr><tr><td>

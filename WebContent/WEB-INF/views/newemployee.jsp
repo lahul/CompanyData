@@ -6,8 +6,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>New Employee</title>
 </head>
+<script type="text/javascript">
+function checkinput(){
+	var x=document.forms["form1"]["eid"].value;
+	if(!(x=="/[1-9]*/")){
+		alert("Employee Id should be an integer");
+		return false;
+	}
+}
+</script>
 <body>
-<form action="newemp" method="post">
+<form name="form1" onsubmit="return checkinput()" action="newemp" method="post">
 <table><tr><td></td></tr><tr><td>
 Employee Id:<input type="text" name="eid"></td></tr><tr><td>
 Employee Name:<input type="text" name="ename"></td></tr><tr><td>
